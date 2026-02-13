@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Каталог телефонов</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #121212; color: #ffffff; }
+        .phone { border: 1px solid #333; padding: 10px; margin: 10px; background-color: #1e1e1e; }
+        .sort-links { margin-bottom: 20px; }
+        img { max-width: 200px; }
+    </style>
+</head>
+<body>
+    <h1>Каталог</h1>
+
+    <div class="sort-links">
+        Сортировать по:
+        <a href="?sort=name">названию (A-Z)</a> |
+        <a href="?sort=min_price">цене (по возрастанию)</a> |
+        <a href="?sort=max_price">цене (по убыванию)</a>
+    </div>
+
+    {% for phone in phones %}
+        <div class="phone">
+            <h2>{{ phone.name }}</h2>
+            <p>Стоимость: {{ phone.price }} ₽</p>
+            <img src="{{ phone.image }}" alt="{{ phone.name }}">
+            <p>Дата выпуска: {{ phone.release_date }}</p>
+            <p>LTE: {% if phone.lte_exists %}Да{% else %}Нет{% endif %}</p>
+            <a href="/catalog/{{ phone.slug }}/">Подробнее</a>
+        </div>
+    {% empty %}
+        <p>Нет телефонов в каталоге.</p>
+    {% endfor %}
+
+    <p><a href="/catalog">Вернуться в каталог</a></p>
+</body>
+</html>
